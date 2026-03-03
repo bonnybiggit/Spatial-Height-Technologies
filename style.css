@@ -740,6 +740,7 @@ h6 {
 .about {
   padding: var(--section-padding);
   background: var(--bg-primary);
+  overflow: hidden;
 }
 
 .about-grid {
@@ -815,7 +816,8 @@ h6 {
 
 .about-image img {
   width: 100%;
-  height: 450px;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   border-radius: var(--radius-lg);
 }
@@ -1605,6 +1607,7 @@ h6 {
 .mission-vision {
   padding: var(--section-padding);
   background: var(--bg-secondary);
+  overflow: hidden;
 }
 
 .mv-grid {
@@ -1860,7 +1863,8 @@ h6 {
   }
 
   .about-image img {
-    height: 300px;
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 
   .projects-grid {
@@ -1946,6 +1950,10 @@ h6 {
   .about-image-overlay {
     flex-direction: column;
     gap: 16px;
+    padding: 16px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
   }
 
   .preview-highlights {
