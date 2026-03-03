@@ -1,356 +1,499 @@
-/* =============================================================
-   Spatial Height Technologies — Main JavaScript
-   =============================================================
-   Lightweight vanilla JS powering:
-   1. Mobile hamburger navigation toggle
-   2. Sticky navbar background on scroll
-   3. Smooth scrolling for anchor links
-   4. Contact form validation + mailto submission
-   5. IntersectionObserver-based scroll-reveal animations
-   6. Active nav link highlighting on scroll
-   ============================================================= */
+/* ============================================================
+   SPATIAL HEIGHT TECHNOLOGIES — Interactive Scripts
+   ============================================================ */
 
-'use strict';
+document.addEventListener('DOMContentLoaded', () => {
 
-/* =============================================================
-   1. DOM ELEMENT REFERENCES
-   ============================================================= */
+  // ---------- Navbar Scroll Behavior ----------
+  const navbar = document.querySelector('.navbar');
+  // On sub-pages, navbar starts with .scrolled class; on homepage, it toggles
+  const isHomepage = document.querySelector('.hero') !== null;
 
-/** @type {HTMLElement} The fixed navbar header */
-const navbar = document.getElementById('navbar');
-
-/** @type {HTMLButtonElement} Hamburger toggle button */
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-
-/** @type {HTMLElement} The nav menu container */
-const navMenu = document.getElementById('navMenu');
-
-/** @type {NodeListOf<HTMLAnchorElement>} All navigation anchor links */
-const navLinks = document.querySelectorAll('.navbar__link');
-
-/** @type {HTMLFormElement} Contact form */
-const contactForm = document.getElementById('contactForm');
-
-/** @type {HTMLElement} Form feedback container */
-const formFeedback = document.getElementById('formFeedback');
-
-
-/* =============================================================
-   2. MOBILE NAVIGATION TOGGLE
-   Handles opening/closing the mobile slide-out menu and
-   creates an overlay behind the menu for click-to-close.
-   ============================================================= */
-
-/**
- * Creates the overlay element for the mobile nav.
- * The overlay sits behind the nav and closes it when clicked.
- */
-const navOverlay = document.createElement('div');
-navOverlay.classList.add('nav-overlay');
-document.body.appendChild(navOverlay);
-
-/**
- * Toggles the mobile navigation menu open/closed.
- * Also handles body scroll lock and ARIA attribute updates.
- */
-function toggleMobileNav() {
-    const isOpen = navMenu.classList.toggle('open');
-
-    // Animate hamburger between bars and X shape
-    hamburgerBtn.classList.toggle('open', isOpen);
-
-    // Update ARIA expanded state for accessibility
-    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
-
-    // Lock body scroll when nav is open
-    document.body.classList.toggle('nav-open', isOpen);
-
-    // Show/hide the backdrop overlay
-    navOverlay.classList.toggle('active', isOpen);
-}
-
-/**
- * Closes the mobile navigation if it's currently open.
- * Called when a nav link is clicked or the overlay is tapped.
- */
-function closeMobileNav() {
-    navMenu.classList.remove('open');
-    hamburgerBtn.classList.remove('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
-    navOverlay.classList.remove('active');
-}
-
-// Hamburger button click event
-hamburgerBtn.addEventListener('click', toggleMobileNav);
-
-// Close mobile nav when the overlay is clicked
-navOverlay.addEventListener('click', closeMobileNav);
-
-// Close mobile nav when any nav link is clicked (for single-page smooth scrolling)
-navLinks.forEach(function (link) {
-    link.addEventListener('click', closeMobileNav);
-});
-
-
-/* =============================================================
-   3. STICKY NAVBAR — BACKGROUND ON SCROLL
-   Adds a solid background colour to the navbar once the user
-   scrolls past a threshold to improve readability.
-   ============================================================= */
-
-/** Scroll distance (in px) before the navbar background appears */
-const SCROLL_THRESHOLD = 60;
-
-/**
- * Checks the current scroll position and toggles the
- * .navbar--scrolled class accordingly.
- */
-function handleNavbarScroll() {
-    if (window.scrollY > SCROLL_THRESHOLD) {
-        navbar.classList.add('navbar--scrolled');
-    } else {
-        navbar.classList.remove('navbar--scrolled');
+  const handleNavScroll = () => {
+    if (isHomepage) {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
     }
-}
+    // Sub-pages always keep .scrolled
+  };
+  window.addEventListener('scroll', handleNavScroll);
+  handleNavScroll();
 
-// Listen for scroll events (passive for performance)
-window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+  // ---------- Mobile Menu Toggle ----------
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
 
-// Run once on load in case the page is already scrolled
-handleNavbarScroll();
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
 
+    // Close mobile menu on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
 
-/* =============================================================
-   4. SMOOTH SCROLLING FOR ANCHOR LINKS
-   Intercepts clicks on internal anchor links (#section) and
-   scrolls smoothly to the target section.
-   ============================================================= */
-
-document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  // ---------- Smooth Scrolling (for anchor links only) ----------
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href');
+      const href = this.getAttribute('href');
+      if (href === '#') return; // skip placeholder links
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 
-        // Skip empty hashes or non-section links
-        if (targetId === '#' || targetId.length < 2) return;
-
-        const targetElement = document.querySelector(targetId);
-        if (!targetElement) return;
-
-        e.preventDefault();
-
-        // Scroll to the target element
-        targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+  // ---------- Scroll Animations (Intersection Observer) ----------
+  const animatedElements = document.querySelectorAll('.fade-up, .fade-left, .fade-right');
+  if (animatedElements.length > 0) {
+    const animationObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            animationObserver.unobserve(entry.target);
+          }
         });
-    });
-});
-
-
-/* =============================================================
-   5. ACTIVE NAV LINK HIGHLIGHTING ON SCROLL
-   Uses IntersectionObserver to detect which section is currently
-   in the viewport and highlights the corresponding nav link.
-   ============================================================= */
-
-/** All observable page sections (those referenced by nav links) */
-const sections = document.querySelectorAll('section[id]');
-
-/**
- * Observer callback: when a section enters the viewport,
- * set its corresponding nav link as active.
- *
- * @param {IntersectionObserverEntry[]} entries
- */
-function handleSectionIntersect(entries) {
-    entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-            // Remove 'active' from all links
-            navLinks.forEach(function (link) {
-                link.classList.remove('active');
-            });
-
-            // Find the matching nav link and set it active
-            const activeLink = document.querySelector(
-                '.navbar__link[href="#' + entry.target.id + '"]'
-            );
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        }
-    });
-}
-
-// Create the observer with a root margin that triggers when section
-// is near the top of the viewport (just below the navbar)
-const sectionObserver = new IntersectionObserver(handleSectionIntersect, {
-    root: null,                     // viewport
-    rootMargin: '-20% 0px -60% 0px', // Trigger when section is in top 20–40%
-    threshold: 0
-});
-
-// Observe each section
-sections.forEach(function (section) {
-    sectionObserver.observe(section);
-});
-
-
-/* =============================================================
-   6. CONTACT FORM VALIDATION & FEEDBACK
-   Client-side validation with user-friendly error messages.
-   On valid submission, opens the user's email client via mailto.
-   ============================================================= */
-
-/**
- * Validates an email address using a simple regex pattern.
- *
- * @param {string} email - The email string to validate.
- * @returns {boolean} True if the email format is valid.
- */
-function isValidEmail(email) {
-    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
-}
-
-/**
- * Displays an error message beneath a form field and adds
- * the error visual state.
- *
- * @param {HTMLElement} input   - The input/textarea element.
- * @param {HTMLElement} errorEl - The error message span element.
- * @param {string}      message - The error message to display.
- */
-function showFieldError(input, errorEl, message) {
-    input.classList.add('error');
-    errorEl.textContent = message;
-}
-
-/**
- * Clears an error from a form field.
- *
- * @param {HTMLElement} input   - The input/textarea element.
- * @param {HTMLElement} errorEl - The error message span element.
- */
-function clearFieldError(input, errorEl) {
-    input.classList.remove('error');
-    errorEl.textContent = '';
-}
-
-// Handle form submission
-contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Clear previous errors
-    document.getElementById('nameError').textContent = '';
-    document.getElementById('emailError').textContent = '';
-    document.getElementById('messageError').textContent = '';
-    document.getElementById('formFeedback').textContent = '';
-    document.getElementById('formFeedback').className = 'form-feedback';
-
-    // Get values
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const message = document.getElementById('contactMessage').value.trim();
-    let valid = true;
-
-    // Name validation
-    if (name.length < 2) {
-        document.getElementById('nameError').textContent = 'Please enter your full name.';
-        valid = false;
-    }
-    // Email validation
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        document.getElementById('emailError').textContent = 'Please enter a valid email address.';
-        valid = false;
-    }
-    // Message validation
-    if (message.length < 10) {
-        document.getElementById('messageError').textContent = 'Please enter a message (at least 10 characters).';
-        valid = false;
-    }
-
-    if (!valid) return;
-
-    // Simulate sending (AJAX or Email service integration can go here)
-    contactForm.querySelector('button[type="submit"]').disabled = true;
-    document.getElementById('formFeedback').textContent = 'Sending...';
-    setTimeout(() => {
-        document.getElementById('formFeedback').textContent = 'Thank you! Your message has been sent.';
-        document.getElementById('formFeedback').classList.add('success');
-        contactForm.reset();
-        contactForm.querySelector('button[type="submit"]').disabled = false;
-    }, 1500);
-});
-
-// Real-time error clearing — remove field errors as the user types
-['contactName', 'contactEmail', 'contactMessage'].forEach(function (id) {
-    var inputEl = document.getElementById(id);
-    var errorEl = document.getElementById(
-        id.replace('contact', '').toLowerCase() + 'Error'
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
     );
 
-    inputEl.addEventListener('input', function () {
-        if (inputEl.classList.contains('error')) {
-            clearFieldError(inputEl, errorEl);
-        }
+    animatedElements.forEach((el, index) => {
+      el.style.transitionDelay = `${index % 3 * 0.1}s`;
+      animationObserver.observe(el);
     });
-});
+  }
 
+  // ---------- Animated Stat Counters ----------
+  const counters = document.querySelectorAll('[data-count]');
+  let countersAnimated = false;
 
-/* =============================================================
-   7. SCROLL-REVEAL ANIMATIONS
-   Uses IntersectionObserver to add the .revealed class to
-   elements with the .reveal class when they enter the viewport.
-   This triggers the CSS fade-in / slide-up transition.
-   ============================================================= */
+  const animateCounters = () => {
+    if (countersAnimated) return;
+    countersAnimated = true;
 
-/** @type {NodeListOf<HTMLElement>} All elements to animate on scroll */
-const revealElements = document.querySelectorAll('.reveal');
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-count'));
+      const suffix = counter.getAttribute('data-suffix') || '';
+      const duration = 2000;
+      const startTime = performance.now();
 
-/**
- * Observer callback: adds .revealed to elements entering the viewport.
- *
- * @param {IntersectionObserverEntry[]} entries
- * @param {IntersectionObserver} observer
- */
-function handleReveal(entries, observer) {
-    entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            // Stop observing once revealed (one-time animation)
-            observer.unobserve(entry.target);
+      const updateCounter = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out quad
+        const eased = 1 - (1 - progress) * (1 - progress);
+        const current = Math.floor(eased * target);
+
+        counter.textContent = current + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target + suffix;
         }
+      };
+
+      requestAnimationFrame(updateCounter);
     });
-}
+  };
 
-// Create the reveal observer
-const revealObserver = new IntersectionObserver(handleReveal, {
-    root: null,
-    rootMargin: '0px 0px -80px 0px',  // Trigger slightly before fully in view
-    threshold: 0.15                     // At least 15% visible
-});
+  // Try multiple counter trigger elements (works on both homepage and about page)
+  const counterTriggers = document.querySelectorAll('.about-image-overlay, .hero-stats');
+  counterTriggers.forEach(trigger => {
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    counterObserver.observe(trigger);
+  });
 
-// Observe all .reveal elements
-revealElements.forEach(function (el) {
-    revealObserver.observe(el);
-});
+  // ---------- Project Filtering ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
 
+  if (filterBtns.length > 0) {
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-/* =============================================================
-   8. YEAR IN FOOTER — AUTOMATIC COPYRIGHT YEAR
-   Dynamically sets the current year in the copyright notice
-   so it never goes stale.
-   ============================================================= */
+        const filter = btn.getAttribute('data-filter');
 
-// Find the copyright paragraph in the footer and update the year
-(function updateCopyrightYear() {
-    var copyrightEl = document.querySelector('.footer__bottom p');
-    if (copyrightEl) {
-        var currentYear = new Date().getFullYear();
-        copyrightEl.innerHTML = copyrightEl.innerHTML.replace(
-            /\d{4}/,
-            String(currentYear)
-        );
+        projectCards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.classList.remove('hidden');
+            card.style.animation = 'fadeInUp 0.4s ease forwards';
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  // ---------- Contact Form Validation ----------
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = contactForm.querySelector('#name').value.trim();
+      const email = contactForm.querySelector('#email').value.trim();
+      const subject = contactForm.querySelector('#subject');
+      const message = contactForm.querySelector('#message').value.trim();
+
+      if (!name || !email || !message) {
+        showNotification('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showNotification('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      // Simulate form submission
+      const submitBtn = contactForm.querySelector('.form-submit');
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        showNotification('Thank you! Your message has been sent successfully.', 'success');
+        contactForm.reset();
+        submitBtn.textContent = 'Send Message';
+        submitBtn.disabled = false;
+      }, 1500);
+    });
+  }
+
+  function showNotification(message, type) {
+    const existing = document.querySelector('.form-notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = `form-notification ${type}`;
+    notification.innerHTML = `
+      <span>${message}</span>
+    `;
+    notification.style.cssText = `
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      padding: 16px 28px;
+      border-radius: 10px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #fff;
+      background: ${type === 'success' ? 'linear-gradient(135deg, #0e7490, #0d3b4f)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      z-index: 10000;
+      animation: slideIn 0.4s ease;
+    `;
+
+    document.body.appendChild(notification);
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.4s ease forwards';
+      setTimeout(() => notification.remove(), 400);
+    }, 4000);
+  }
+
+  // ---------- Hero Canvas — Geospatial Grid Animation ----------
+  const canvas = document.getElementById('heroCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    let animId;
+
+    function resizeCanvas() {
+      width = canvas.width = canvas.parentElement.offsetWidth;
+      height = canvas.height = canvas.parentElement.offsetHeight;
     }
-})();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > width) this.speedX *= -1;
+        if (this.y < 0 || this.y > height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(57, 255, 20, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor((width * height) / 8000);
+      for (let i = 0; i < Math.min(count, 120); i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function drawGrid() {
+      ctx.strokeStyle = 'rgba(14, 116, 144, 0.08)';
+      ctx.lineWidth = 0.5;
+
+      const spacing = 60;
+      for (let x = 0; x < width; x += spacing) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < height; y += spacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 150) {
+            const opacity = (1 - dist / 150) * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 229, 255, ${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      drawGrid();
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      drawConnections();
+      animId = requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    initParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initParticles();
+    });
+  }
+
+  // ---------- CSS Keyframes for Notifications ----------
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  if (isHomepage) {
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    const highlightNav = () => {
+      const scrollPos = window.scrollY + 150;
+
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+
+        if (scrollPos >= top && scrollPos < top + height) {
+          navItems.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === `index.html#${id}` || href === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    };
+
+    window.addEventListener('scroll', highlightNav);
+  }
+
+  // ---------- Three.js 3D Globe Implementation ----------
+  const globeContainer = document.getElementById('heroGlobe');
+  if (globeContainer && isHomepage && typeof THREE !== 'undefined') {
+    let scene, camera, renderer, earth, atmosphere;
+    let isHovered = false;
+    let isDragging = false;
+    let previousMouseX = 0;
+    let targetRotationY = 0;
+    let currentRotationY = 0;
+
+    const initGlobe = () => {
+      scene = new THREE.Scene();
+
+      const width = globeContainer.offsetWidth;
+      const height = globeContainer.offsetHeight;
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.z = 2.5;
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      globeContainer.appendChild(renderer.domElement);
+
+      const geometry = new THREE.SphereGeometry(1, 64, 64);
+      const textureLoader = new THREE.TextureLoader();
+
+      const texture = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg');
+      const bumpMap = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png');
+
+      const material = new THREE.MeshPhongMaterial({
+        map: texture,
+        bumpMap: bumpMap,
+        bumpScale: 0.05,
+        specular: new THREE.Color('#2d2d2d'),
+        shininess: 5
+      });
+
+      earth = new THREE.Mesh(geometry, material);
+      scene.add(earth);
+
+      const atmosGeometry = new THREE.SphereGeometry(1.05, 64, 64);
+      const atmosMaterial = new THREE.MeshPhongMaterial({
+        color: new THREE.Color('#0061FF'),
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.BackSide,
+        blending: THREE.AdditiveBlending
+      });
+      atmosphere = new THREE.Mesh(atmosGeometry, atmosMaterial);
+      scene.add(atmosphere);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      directionalLight.position.set(5, 3, 5);
+      scene.add(directionalLight);
+
+      window.addEventListener('resize', () => {
+        const newWidth = globeContainer.offsetWidth;
+        const newHeight = globeContainer.offsetHeight;
+        if (newWidth && newHeight) {
+          camera.aspect = newWidth / newHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(newWidth, newHeight);
+        }
+      });
+
+      globeContainer.addEventListener('mouseenter', () => { isHovered = true; });
+      globeContainer.addEventListener('mouseleave', () => {
+        isHovered = false;
+        isDragging = false;
+      });
+
+      const onDown = (e) => {
+        isDragging = true;
+        previousMouseX = e.touches ? e.touches[0].clientX : e.clientX;
+      };
+
+      const onMove = (e) => {
+        if (!isDragging) return;
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const deltaX = x - previousMouseX;
+        targetRotationY += deltaX * 0.005;
+        previousMouseX = x;
+      };
+
+      const onUp = () => { isDragging = false; };
+
+      globeContainer.addEventListener('mousedown', onDown);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+
+      globeContainer.addEventListener('touchstart', onDown, { passive: true });
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('touchend', onUp);
+
+      animate();
+    };
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      if (!isHovered && !isDragging) {
+        earth.rotation.y += 0.002;
+      }
+
+      earth.rotation.y += (targetRotationY - currentRotationY) * 0.1;
+      currentRotationY = earth.rotation.y;
+
+      const pulseTime = Date.now() * 0.001;
+      atmosphere.scale.setScalar(1 + Math.sin(pulseTime) * 0.02);
+
+      renderer.render(scene, camera);
+    };
+
+    initGlobe();
+  }
+});

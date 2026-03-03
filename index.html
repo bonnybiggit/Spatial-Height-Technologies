@@ -2,731 +2,497 @@
 <html lang="en">
 
 <head>
-    <!-- ============================================================
-         Spatial Height Technologies — Website
-         ============================================================ -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Spatial Height Technologies — Leading GIS & Remote Sensing solutions for urban planning, environmental monitoring, agriculture, and infrastructure development.">
+  <title>Spatial Height Technologies | GIS & Remote Sensing Solutions</title>
 
-    <!-- SEO Meta Tags -->
-    <meta name="description"
-        content="Spatial Height Technologies — Innovative technology solutions including software development, cloud computing, cybersecurity, data analytics, and AI automation.">
-    <meta name="keywords"
-        content="Spatial Height Technologies, software development, cloud solutions, cybersecurity, data analytics, IT consulting, AI automation">
-    <meta name="author" content="Spatial Height Technologies">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
-    <title>Spatial Height Technologies — Innovation Driven by Location Intelligence</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="SHT FOLDER/PNG/Asset 11.png">
 
-    <!-- Google Fonts — Work Sans (brand typeface) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
-    <!-- External Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ============================================================
-         SECTION 1 — NAVIGATION BAR
-         Sticky header with logo, nav links, and mobile hamburger.
-         ============================================================ -->
-    <header id="navbar" class="navbar">
-        <div class="container navbar__inner">
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="SHT FOLDER/PNG/Asset 2.png" alt="Spatial Height Technologies Logo">
+      </a>
 
-            <a href="#home" class="navbar__logo" aria-label="Spatial Height Technologies Home">
-                <img src="SHT FOLDER/PNG/Asset 2.png" alt="Spatial Height Technologies Logo" class="navbar__logo-img">
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="images/hero-banner.png" alt="GIS satellite aerial view">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-grid">
+      <canvas id="heroCanvas"></canvas>
+    </div>
+
+    <div class="container">
+      <div class="hero-flex">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+              <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" />
+            </svg>
+            Precision Geospatial Intelligence
+          </div>
+
+          <h1>Mapping the Future with <span class="highlight">Spatial Innovation</span></h1>
+
+          <p class="hero-description">
+            We deliver cutting-edge GIS, remote sensing, and geospatial analytics solutions
+            that transform how organizations understand, manage, and interact with geographic data.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="services.html" class="btn btn-primary">
+              Explore Solutions
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </a>
-
-            <!-- Desktop Navigation Links -->
-            <nav class="navbar__nav" id="navMenu" aria-label="Primary Navigation">
-                <ul class="navbar__list">
-                    <li><a href="#home" class="navbar__link active">Home</a></li>
-                    <li><a href="#about" class="navbar__link">About</a></li>
-                    <li><a href="#services" class="navbar__link">Services</a></li>
-                    <li><a href="#why-us" class="navbar__link">Why Us</a></li>
-                    <li><a href="#projects" class="navbar__link">Projects</a></li>
-                    <li><a href="#contact" class="navbar__link navbar__link--cta">Contact Us</a></li>
-                </ul>
-            </nav>
-
-            <!-- Mobile Hamburger Button -->
-            <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu"
-                aria-expanded="false">
-                <span class="navbar__hamburger-line"></span>
-                <span class="navbar__hamburger-line"></span>
-                <span class="navbar__hamburger-line"></span>
-            </button>
-        </div>
-    </header>
-
-    <!-- ============================================================
-         SECTION 2 — HERO
-         ============================================================ -->
-    <section id="home" class="hero">
-        <!-- Decorative geometric shapes (rendered via CSS) -->
-        <div class="hero__shapes" aria-hidden="true">
-            <div class="hero__shape hero__shape--1"></div>
-            <div class="hero__shape hero__shape--2"></div>
-            <div class="hero__shape hero__shape--3"></div>
+            <a href="about.html" class="btn btn-outline">
+              Learn More
+            </a>
+          </div>
         </div>
 
-        <div class="container hero__inner">
-            <div class="hero__content">
-                <!-- White logo variant for the dark hero background -->
-                <img src="SHT FOLDER/PNG/Asset 10.png" alt="Spatial Height Technologies" class="hero__logo reveal">
+        <!-- 3D Globe -->
+        <div class="hero-globe" id="heroGlobe"></div>
+      </div>
 
-                <h1 class="hero__title reveal">
-                    Innovation Driven by Location<br>
-
-                    <span class="hero__title--accent">Intelligence</span>
-                </h1>
-
-                <p class="hero__subtitle reveal">
-                    Unlock the power of location intelligence with Spatial
-                    Heights Technologies. From geospatial solutions to
-                    data-driven insights, we help organizations make
-                    smarter decisions and shape a sustainable future.
-                </p>
-
-                <div class="hero__actions reveal">
-                    <a href="#services" class="btn btn--primary">Explore Our Services</a>
-                    <a href="#contact" class="btn btn--outline">Get in Touch</a>
-                </div>
-            </div>
-
-            <!-- Decorative hero graphic placeholder -->
-            <div class="hero__graphic reveal" aria-hidden="true">
-                <img src="SHT FOLDER/PNG/Asset 13.png" alt="" class="hero__graphic-img">
-            </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <h3 data-count="150" data-suffix="+">0+</h3>
+          <p>Projects Delivered</p>
         </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 3 — ABOUT
-         Company overview with mission and vision.
-         ============================================================ -->
-    <section id="about" class="about section">
-        <!-- Floating shapes for premium look -->
-        <div class="hero__shapes">
-            <div class="hero__shape hero__shape--1"></div>
-            <div class="hero__shape hero__shape--2"></div>
+        <div class="hero-stat">
+          <h3 data-count="25" data-suffix="+">0+</h3>
+          <p>Countries Served</p>
         </div>
-        <div class="container">
-            <!-- Section heading -->
-            <div class="section__header reveal">
-                <span class="section__tag">Who We Are</span>
-                <h2 class="section__title">About Spatial Height Technologies</h2>
-                <p class="section__subtitle">
-                    A forward-thinking technology company committed to solving
-                    complex business challenges through innovation.
-                </p>
-            </div>
-
-            <div class="about__grid">
-                <!-- Company Overview -->
-                <div class="about__text reveal">
-                    <p>
-                        <strong>Spatial Heights Technologies</strong> is a recently established geospatial solutions
-                        firm dedicated to advancing innovation in
-                        geographic information systems (GIS). We focus on delivering cutting-edge services, including
-                        geospatial solutions
-                        development, capacity building for organizations, surveying and mapping, and data collection and
-                        management and
-                        many more.
-                    </p>
-                    <p>
-                        Headquartered in Nigeria, Spatial Heights aims to empower clients across various sectors by
-                        leveraging
-                        GIS technology to solve complex challenges, foster sustainable development, and drive
-                        data-driven decision-making.
-                        With a commitment to excellence and collaboration, the firm is poised to make a significant
-                        impact in the geospatial
-                        industry, particularly in West Africa.
-                    </p>
-                </div>
-
-                <!-- Mission & Vision Cards -->
-                <div class="about__cards">
-                    <div class="about__card reveal">
-                        <!-- Mission Icon (SVG inline for styling) -->
-                        <div class="about__card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                width="40" height="40">
-                                <circle cx="12" cy="12" r="10" />
-                                <circle cx="12" cy="12" r="6" />
-                                <circle cx="12" cy="12" r="2" />
-                            </svg>
-                        </div>
-                        <h3>Our Mission</h3>
-                        <p>
-                            To empower organizations with intelligent geospatial solutions that drive innovation,
-                            enhance decision-making, and
-                            unlock the power of location-based insights across Africa.
-                        </p>
-                    </div>
-
-                    <div class="about__card reveal">
-                        <!-- Vision Icon -->
-                        <div class="about__card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                width="40" height="40">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                        </div>
-                        <h3>Our Vision</h3>
-                        <p>
-                            To become Africa’s leading geospatial company, recognized for driving innovation and
-                            enabling
-                            smarter, data-informed decisions.
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-stat">
+          <h3 data-count="98" data-suffix="%">0%</h3>
+          <p>Client Satisfaction</p>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- ============================================================
-         SECTION 4 — SERVICES
-         Six service cards with inline SVG icons.
-         ============================================================ -->
-    <section id="services" class="services section section--dark">
-        <div class="container">
-            <div class="section__header reveal">
-                <span class="section__tag">What We Do</span>
-                <h2 class="section__title">Our Services</h2>
-                <p class="section__subtitle">
-                    We offer a comprehensive suite of technology services
-                    designed to accelerate your digital journey.
-                </p>
-            </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
 
-            <div class="services__grid">
-                <!-- Service 1 — Software Development -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <polyline points="16 18 22 12 16 6" />
-                            <polyline points="8 6 2 12 8 18" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">GIS & Mapping</h3>
-                    <p class="service-card__desc">
-                        Innovative mapping and spatial analysis for accurate decision-making.
-                    </p>
-                </article>
+  <!-- ============================================================
+       ABOUT PREVIEW SECTION
+       ============================================================ -->
+  <section class="about-preview" id="about">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">About Us</span>
+        <h2 class="section-title">Pioneering Geospatial Excellence Since Day One</h2>
+        <p class="section-subtitle">
+          Spatial Height Technologies is a forward-thinking geospatial solutions firm dedicated to
+          transforming geographic data into strategic intelligence. Our team of GIS analysts, remote
+          sensing specialists, and data engineers leverage cutting-edge technology to deliver
+          precision-driven insights worldwide.
+        </p>
+      </div>
 
-                <!-- Service 2 — Cloud Solutions -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">Cloud Solutions</h3>
-                    <p class="service-card__desc">
-                        Secure, scalable cloud infrastructure and migration
-                        services on AWS, Azure, and Google Cloud.
-                    </p>
-                </article>
-
-                <!-- Service 3 — Remote Sensing -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">Remote Sensing</h3>
-                    <p class="service-card__desc">
-                        Advanced satellite imagery analysis for environmental monitoring and planning
-                    </p>
-                </article>
-
-                <!-- Service 4 — Data Analytics -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <line x1="18" y1="20" x2="18" y2="10" />
-                            <line x1="12" y1="20" x2="12" y2="4" />
-                            <line x1="6" y1="20" x2="6" y2="14" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">Data Analytics</h3>
-                    <p class="service-card__desc">
-                        Extracting insights from geospatial data empowers your strategies
-                    </p>
-                </article>
-
-                <!-- Service 5 — IT Consulting -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">IT Consulting</h3>
-                    <p class="service-card__desc">
-                        Strategic technology advisory, digital roadmaps,
-                        and project management to align IT with business goals.
-                    </p>
-                </article>
-
-                <!-- Service 6 — AI & Automation -->
-                <article class="service-card reveal">
-                    <div class="service-card__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="36" height="36">
-                            <rect x="4" y="4" width="16" height="16" rx="2" />
-                            <path d="M9 9h6v6H9z" />
-                            <path d="M9 1v3" />
-                            <path d="M15 1v3" />
-                            <path d="M9 20v3" />
-                            <path d="M15 20v3" />
-                            <path d="M20 9h3" />
-                            <path d="M20 15h3" />
-                            <path d="M1 9h3" />
-                            <path d="M1 15h3" />
-                        </svg>
-                    </div>
-                    <h3 class="service-card__title">AI &amp; Automation</h3>
-                    <p class="service-card__desc">
-                        Machine learning models, intelligent chatbots, and
-                        process automation to boost efficiency.
-                    </p>
-                </article>
-            </div>
+      <div class="preview-highlights fade-up">
+        <div class="preview-highlight-item">
+          <div class="preview-highlight-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <h4>ISO Certified</h4>
+          <p>International quality standards</p>
         </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 5 — WHY CHOOSE US / FEATURES
-         Key strengths presented as feature cards.
-         ============================================================ -->
-    <section id="why-us" class="why-us section">
-        <!-- Floating shapes for premium look -->
-        <div class="hero__shapes">
-            <div class="hero__shape hero__shape--1"></div>
-            <div class="hero__shape hero__shape--3"></div>
+        <div class="preview-highlight-item">
+          <div class="preview-highlight-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h4>Expert Team</h4>
+          <p>40+ GIS specialists</p>
         </div>
-        <div class="container">
-            <div class="section__header reveal">
-                <span class="section__tag">Our Edge</span>
-                <h2 class="section__title">Why Choose Us</h2>
-                <p class="section__subtitle">
-                    We combine deep technical expertise with a client-first
-                    mindset to deliver results that matter.
-                </p>
-            </div>
-
-            <div class="why-us__grid">
-                <!-- Feature 1 — Innovation -->
-                <div class="feature-card reveal">
-                    <div class="feature-card__number">01</div>
-                    <h3 class="feature-card__title">Relentless Innovation</h3>
-                    <p class="feature-card__desc">
-                        We stay ahead of the curve, leveraging emerging
-                        technologies to keep your business competitive.
-                    </p>
-                </div>
-
-                <!-- Feature 2 — Security -->
-                <div class="feature-card reveal">
-                    <div class="feature-card__number">02</div>
-                    <h3 class="feature-card__title">Enterprise Security</h3>
-                    <p class="feature-card__desc">
-                        Security is embedded into everything we build —
-                        not bolted on as an afterthought.
-                    </p>
-                </div>
-
-                <!-- Feature 3 — Scalability -->
-                <div class="feature-card reveal">
-                    <div class="feature-card__number">03</div>
-                    <h3 class="feature-card__title">Built to Scale</h3>
-                    <p class="feature-card__desc">
-                        Our solutions are architected for growth, handling
-                        tomorrow's demands from day one.
-                    </p>
-                </div>
-
-                <!-- Feature 4 — Support -->
-                <div class="feature-card reveal">
-                    <div class="feature-card__number">04</div>
-                    <h3 class="feature-card__title">Dedicated Support</h3>
-                    <p class="feature-card__desc">
-                        Round-the-clock support and proactive maintenance
-                        ensure your systems never skip a beat.
-                    </p>
-                </div>
-            </div>
+        <div class="preview-highlight-item">
+          <div class="preview-highlight-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </div>
+          <h4>Global Reach</h4>
+          <p>25+ countries served</p>
         </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 6 — PROJECTS / PORTFOLIO
-         Grid of project placeholder cards.
-         ============================================================ -->
-    <section id="projects" class="projects section section--dark">
-        <div class="container">
-            <div class="section__header reveal">
-                <span class="section__tag">Our Work</span>
-                <h2 class="section__title">Featured Projects</h2>
-                <p class="section__subtitle">
-                    A selection of projects that showcase our expertise
-                    across industries and technologies.
-                </p>
-            </div>
-
-            <div class="projects__grid">
-                <!-- Project 1 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <rect x="2" y="3" width="20" height="14" rx="2" />
-                                <line x1="8" y1="21" x2="16" y2="21" />
-                                <line x1="12" y1="17" x2="12" y2="21" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">Web Application</span>
-                        <h3 class="project-card__title">Enterprise Dashboard</h3>
-                        <p class="project-card__desc">
-                            Real-time analytics dashboard for a multinational
-                            logistics firm.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Project 2 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <rect x="5" y="2" width="14" height="20" rx="2" />
-                                <line x1="12" y1="18" x2="12" y2="18" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">Mobile App</span>
-                        <h3 class="project-card__title">FinTech Payment Platform</h3>
-                        <p class="project-card__desc">
-                            Cross-platform mobile wallet with biometric
-                            authentication and instant transfers.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Project 3 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">Cloud Migration</span>
-                        <h3 class="project-card__title">Healthcare Cloud Platform</h3>
-                        <p class="project-card__desc">
-                            HIPAA-compliant cloud migration for a national
-                            healthcare provider.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Project 4 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">Cybersecurity</span>
-                        <h3 class="project-card__title">Banking Security Audit</h3>
-                        <p class="project-card__desc">
-                            Full penetration testing and security overhaul for a
-                            tier-1 banking institution.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Project 5 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <line x1="18" y1="20" x2="18" y2="10" />
-                                <line x1="12" y1="20" x2="12" y2="4" />
-                                <line x1="6" y1="20" x2="6" y2="14" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">Data Analytics</span>
-                        <h3 class="project-card__title">Retail Insights Engine</h3>
-                        <p class="project-card__desc">
-                            Predictive analytics platform driving inventory
-                            optimization for a retail chain.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Project 6 -->
-                <article class="project-card reveal">
-                    <div class="project-card__img">
-                        <div class="project-card__placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1" width="48" height="48">
-                                <rect x="4" y="4" width="16" height="16" rx="2" />
-                                <path d="M9 9h6v6H9z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="project-card__body">
-                        <span class="project-card__tag">AI / ML</span>
-                        <h3 class="project-card__title">Smart Supply Chain</h3>
-                        <p class="project-card__desc">
-                            AI-driven demand forecasting reducing waste by 35%
-                            for a manufacturing firm.
-                        </p>
-                    </div>
-                </article>
-            </div>
+        <div class="preview-highlight-item">
+          <div class="preview-highlight-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <h4>Data Security</h4>
+          <p>Enterprise-grade protection</p>
         </div>
-    </section>
+      </div>
 
-    <!-- ============================================================
-         SECTION 7 — CONTACT
-         Two-column layout: form + company information.
-         ============================================================ -->
-    <section id="contact" class="contact section">
-        <!-- Floating shapes for premium look -->
-        <div class="hero__shapes">
-            <div class="hero__shape hero__shape--1"></div>
-            <div class="hero__shape hero__shape--2"></div>
-        </div>
-        <div class="container">
-            <div class="section__header reveal">
-                <span class="section__tag">Reach Out</span>
-                <h2 class="section__title">Contact Us</h2>
-                <p class="section__subtitle">
-                    Have a project in mind? Let's discuss how we can help
-                    your business grow.
-                </p>
-            </div>
+      <div class="preview-cta fade-up">
+        <a href="about.html" class="btn btn-primary">
+          Read More About Us
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
-            <div class="contact__grid">
-                <!-- Contact Form -->
-                <form class="contact__form reveal" id="contactForm" novalidate>
-                    <div class="form-group">
-                        <label for="contactName">Full Name</label>
-                        <input type="text" id="contactName" name="name" placeholder="Spatial Height" required>
-                        <span class="form-error" id="nameError"></span>
-                    </div>
+  <!-- ============================================================
+       SERVICES PREVIEW SECTION
+       ============================================================ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-title">Geospatial Solutions That Drive Impact</h2>
+        <p class="section-subtitle">From satellite imagery analysis to precision drone surveys, we provide end-to-end
+          geospatial services tailored to your needs.</p>
+      </div>
 
-                    <div class="form-group">
-                        <label for="contactEmail">Email Address</label>
-                        <input type="email" id="contactEmail" name="email" placeholder="spatialheight@gmail.com" required>
-                        <span class="form-error" id="emailError"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactMessage">Your Message</label>
-                        <textarea id="contactMessage" name="message" rows="6"
-                            placeholder="Tell us about your project..." required></textarea>
-                        <span class="form-error" id="messageError"></span>
-                    </div>
-
-                    <button type="submit" class="btn btn--primary btn--full">
-                        Send Message
-                    </button>
-
-                    <!-- Success / failure feedback -->
-                    <div class="form-feedback" id="formFeedback" aria-live="polite"></div>
-                </form>
-
-                <!-- Company Info -->
-                <div class="contact__info reveal">
-                    <div class="contact__info-block">
-                        <div class="contact__info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                width="28" height="28">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Office Address</h4>
-                            <p>Lagos, Nigeria</p>
-                        </div>
-                    </div>
-
-                    <div class="contact__info-block">
-                        <div class="contact__info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                width="28" height="28">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Email Us</h4>
-                            <p><a href="mailto:info@spatialheight.com">info@spatialheight.com</a></p>
-                        </div>
-                    </div>
-
-                    <div class="contact__info-block">
-                        <div class="contact__info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                width="28" height="28">
-                                <path
-                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4>Call Us</h4>
-                            <p><a href="tel:+2341234567890">+234 123 456 7890</a></p>
-                        </div>
-                    </div>
-
-                    <!-- Social Media Links -->
-                    <div class="contact__socials">
-                        <h4>Follow Us</h4>
-                        <div class="contact__socials-links">
-                            <!-- LinkedIn -->
-                            <a href="#" class="social-link" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    width="22" height="22">
-                                    <path
-                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                </svg>
-                            </a>
-                            <!-- Twitter / X -->
-                            <a href="#" class="social-link" aria-label="Twitter">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    width="22" height="22">
-                                    <path
-                                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
-                            </a>
-                            <!-- Instagram -->
-                            <a href="#" class="social-link" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" width="22" height="22">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" />
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                                </svg>
-                            </a>
-                            <!-- Facebook -->
-                            <a href="#" class="social-link" aria-label="Facebook">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    width="22" height="22">
-                                    <path
-                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 8 — FOOTER
-         Logo, quick links, copyright, social placeholders.
-         ============================================================ -->
-    <footer class="footer">
-        <div class="container footer__inner">
-            <!-- Footer brand -->
-            <div class="footer__brand">
-                <img src="SHT FOLDER/PNG/Asset 2.png" alt="Spatial Height Technologies" class="footer__logo">
-                <p class="footer__tagline">
-                    Elevating businesses through technology.
-                </p>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="footer__links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#why-us">Why Us</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-
-            <!-- Services Quick Links -->
-            <div class="footer__links">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="#services">Software Development</a></li>
-                    <li><a href="#services">Cloud Solutions</a></li>
-                    <li><a href="#services">Cybersecurity</a></li>
-                    <li><a href="#services">Data Analytics</a></li>
-                    <li><a href="#services">IT Consulting</a></li>
-                    <li><a href="#services">AI &amp; Automation</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info in Footer -->
-            <div class="footer__contact">
-                <h4>Get in Touch</h4>
-                <p>Lagos, Nigeria</p>
-                <p><a href="mailto:info@spatialheight.com">info@spatialheight.com</a></p>
-                <p><a href="tel:+2341234567890">+234 123 456 7890</a></p>
-            </div>
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z" />
+              <path d="M8 2v16" />
+              <path d="M16 6v16" />
+            </svg>
+          </div>
+          <h3>GIS Mapping & Analysis</h3>
+          <p>High-precision geographic information systems for spatial data management, cartographic production, and
+            advanced geospatial analysis workflows.</p>
+          <a href="services.html" class="learn-more">
+            Learn More
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
 
-        <!-- Bottom Bar -->
-        <div class="footer__bottom">
-            <div class="container footer__bottom-inner">
-                <p>&copy; 2026 Spatial Height Technologies. All rights reserved.</p>
-                <div class="footer__bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                </div>
-            </div>
+        <!-- Service 2 -->
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </div>
+          <h3>Remote Sensing</h3>
+          <p>Multi-spectral and hyperspectral satellite imagery interpretation, change detection analysis, and earth
+            observation data processing for actionable insights.</p>
+          <a href="services.html" class="learn-more">
+            Learn More
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
-    </footer>
 
-    <!-- External JavaScript -->
-    <script src="script.js"></script>
+        <!-- Service 3 -->
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+          </div>
+          <h3>Drone & LiDAR Surveys</h3>
+          <p>High-resolution aerial data acquisition with UAV photography, LiDAR point cloud generation, digital terrain
+            modeling, and volumetric analysis.</p>
+          <a href="services.html" class="learn-more">
+            Learn More
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
 
+      <div class="preview-cta fade-up">
+        <a href="services.html" class="btn btn-primary">
+          View All Services
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS PREVIEW SECTION
+       ============================================================ -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Explore our portfolio of geospatial solutions that have delivered measurable impact
+          across multiple sectors and geographies.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card fade-up" data-category="urban">
+          <img src="images/project-urban.png" alt="Smart City 3D Digital Twin">
+          <div class="project-card-overlay">
+            <span class="project-tag">Urban Planning</span>
+            <h3>Smart City Digital Twin</h3>
+            <p>3D geospatial modeling and IoT integration for metropolitan urban intelligence platform.</p>
+            <a href="projects.html" class="view-project">
+              View Details
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card fade-up" data-category="environment">
+          <img src="images/project-environment.png" alt="Forest Ecosystem Monitoring">
+          <div class="project-card-overlay">
+            <span class="project-tag">Environment</span>
+            <h3>National Forest Monitoring</h3>
+            <p>NDVI-based deforestation tracking and biodiversity assessment using Sentinel-2 imagery.</p>
+            <a href="projects.html" class="view-project">
+              View Details
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card fade-up" data-category="agriculture">
+          <img src="images/project-agriculture.png" alt="Precision Agriculture Mapping">
+          <div class="project-card-overlay">
+            <span class="project-tag">Agriculture</span>
+            <h3>Precision Agriculture Platform</h3>
+            <p>Crop health monitoring, yield prediction, and soil analysis using multi-spectral drone imagery.</p>
+            <a href="projects.html" class="view-project">
+              View Details
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-cta fade-up">
+        <a href="projects.html" class="btn btn-outline">
+          View All Projects
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT PREVIEW SECTION
+       ============================================================ -->
+  <section class="contact-preview" id="contact">
+    <div class="container">
+      <div class="contact-preview-inner fade-up">
+        <div class="contact-preview-content">
+          <span class="section-label">Get In Touch</span>
+          <h2 class="section-title">Let's Build Something Remarkable</h2>
+          <p>Have a project in mind? Reach out and let's discuss how geospatial intelligence can transform your
+            operations. Our team is ready to help you harness the power of spatial data.</p>
+          <div class="contact-preview-details">
+            <div class="contact-preview-detail">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <a href="mailto:info@spatialheight.com">info@spatialheight.com</a>
+            </div>
+            <div class="contact-preview-detail">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <a href="tel:+2341234567890">+234 123 456 7890</a>
+            </div>
+          </div>
+          <a href="contact.html" class="btn btn-primary">
+            Contact Us
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <img src="SHT FOLDER/PNG/Asset 2.png" alt="Spatial Height Technologies">
+          <p>Pioneering geospatial solutions that transform how organizations understand and interact with geographic
+            data, driving sustainable development worldwide.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">GIS Mapping</a></li>
+            <li><a href="services.html">Remote Sensing</a></li>
+            <li><a href="services.html">Drone Surveys</a></li>
+            <li><a href="services.html">Environmental Monitoring</a></li>
+            <li><a href="services.html">Data Visualization</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <p>Innovation Hub, 15 Geospatial Drive, Lagos, Nigeria</p>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <a href="mailto:info@spatialheight.com">info@spatialheight.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <a href="tel:+2341234567890">+234 123 456 7890</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Spatial Height Technologies. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
 </body>
 
 </html>
