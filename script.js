@@ -481,12 +481,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const animate = () => {
       requestAnimationFrame(animate);
 
-      if (!isHovered && !isDragging) {
-        earth.rotation.y += 0.002;
-      }
+      // Always auto-rotate the globe continuously
+      const autoRotateSpeed = 0.003;
+      earth.rotation.y += autoRotateSpeed;
 
-      earth.rotation.y += (targetRotationY - currentRotationY) * 0.1;
-      currentRotationY = earth.rotation.y;
+      // Apply any drag offset smoothly
+      const dragDelta = (targetRotationY - currentRotationY) * 0.1;
+      earth.rotation.y += dragDelta;
+      currentRotationY += dragDelta;
 
       const pulseTime = Date.now() * 0.001;
       atmosphere.scale.setScalar(1 + Math.sin(pulseTime) * 0.02);

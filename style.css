@@ -14,7 +14,7 @@
   --white: #ffffff;
 
   /* Semantic Aliases */
-  --bg-primary: var(--penn-blue);
+  --bg-primary: #020245;
   --bg-secondary: #020245;
   /* Slightly lighter Penn Blue for depth */
   --text-main: var(--white);
@@ -271,7 +271,7 @@ h6 {
 }
 
 .nav-logo img {
-  height: 42px;
+  height: 32px;
   width: auto;
   transition: var(--transition-base);
 }
@@ -289,7 +289,7 @@ h6 {
 .nav-links a {
   font-size: 0.88rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--spring-green);
   letter-spacing: 0.5px;
   position: relative;
 }
@@ -1964,4 +1964,82 @@ h6 {
     flex-direction: column;
     align-items: center;
   }
+
+  .mv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   MISSION & VISION SECTION
+   ============================================================ */
+.mission-vision {
+  padding: var(--section-padding);
+  background: var(--bg-secondary);
+}
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mv-card {
+  background: rgba(0, 97, 255, 0.05);
+  border: 1px solid rgba(131, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 48px 36px;
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.mv-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 97, 255, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 97, 255, 0.15);
+}
+
+.mv-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 97, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px auto;
+  transition: all var(--transition-base);
+}
+
+.mv-card:hover .mv-icon {
+  background: var(--neon-blue);
+  box-shadow: 0 4px 20px rgba(0, 97, 255, 0.3);
+}
+
+.mv-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--neon-blue);
+  fill: none;
+  stroke-width: 1.8;
+  transition: stroke var(--transition-base);
+}
+
+.mv-card:hover .mv-icon svg {
+  stroke: var(--white);
+}
+
+.mv-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.mv-card p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-muted);
 }
